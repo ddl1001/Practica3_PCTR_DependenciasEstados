@@ -24,26 +24,26 @@ public class Parque implements IParque{
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
-		
-		comprobarAntesDeEntrar();
 				
-		
+		comprobarAntesDeEntrar();
+						
+				
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
-		
+				
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
-		
+				
 		notifyAll();
-		
+						
 		checkInvariante();
 		
 	}
 	
 	@Override
 	public synchronized void salirDelParque(String puerta) {
-		
+
 		comprobarAntesDeSalir();
 		
 		contadorPersonasTotales--;		
@@ -59,6 +59,7 @@ public class Parque implements IParque{
 		imprimirInfo(puerta, "Salida");
 		
 		notifyAll();
+		
 	}
 	
 	
