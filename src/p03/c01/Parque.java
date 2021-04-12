@@ -89,10 +89,15 @@ public class Parque implements IParque{
 		assert contadorPersonasTotales>=0 : "No se han gestionado correctamente las salidas";
 	}
 
-	protected void comprobarAntesDeEntrar(){	// TODO
-		//
-		// TODO
-		//
+	protected void comprobarAntesDeEntrar(){	
+		
+		while(contadorPersonasTotales==aforo) {
+			try {
+				wait();
+			}catch(InterruptedException e) {
+				 e.printStackTrace();
+			}
+		}
 	}
 
 	protected void comprobarAntesDeSalir(){		// TODO
