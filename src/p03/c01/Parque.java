@@ -100,10 +100,14 @@ public class Parque implements IParque{
 		}
 	}
 
-	protected void comprobarAntesDeSalir(){		// TODO
-		//
-		// TODO
-		//
+	protected void comprobarAntesDeSalir(){	
+		while(contadorPersonasTotales==0) {
+			try {
+				wait();
+			}catch(InterruptedException e) {
+				 e.printStackTrace();
+			}
+		}
 	}
 
 }
