@@ -18,14 +18,14 @@ public class Parque implements IParque{
 
 
 	@Override
-	public void entrarAlParque(String puerta){		// TODO
+	public synchronized void entrarAlParque(String puerta){		// TODO
 		
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
 		
-		// TODO
+		comprobarAntesDeEntrar();
 				
 		
 		// Aumentamos el contador total y el individual
@@ -35,17 +35,30 @@ public class Parque implements IParque{
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
 		
-		// TODO
+		notifyAll();
 		
-		
-		// TODO
+		checkInvariante();
 		
 	}
 	
 	@Override
-	public void salirDelParque(String puerta) {
-		// TODO Auto-generated method stub
+	public synchronized void salirDelParque(String puerta) {
 		
+		comprobarAntesDeSalir();
+		
+		contadorPersonasTotales--;		
+		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
+		
+		
+		// Imprimimos el estado del parque
+		
+		sumarContadoresPuerta();
+	
+		checkInvariante();
+		
+		imprimirInfo(puerta, "Salida");
+		
+		notifyAll();
 	}
 	
 	
@@ -60,7 +73,7 @@ public class Parque implements IParque{
 		System.out.println(" ");
 	}
 	
-	private int sumarContadoresPuerta() {
+	private synchronized int sumarContadoresPuerta() {
 		int sumaContadoresPuerta = 0;
 			Enumeration<Integer> iterPuertas = contadoresPersonasPuerta.elements();
 			while (iterPuertas.hasMoreElements()) {
